@@ -11,13 +11,78 @@ from mahjong.meld import Meld
 from mahjong.constants import EAST, SOUTH, WEST, NORTH#シャンテン数
 from mahjong.shanten import Shanten
 
-#Shanten(シャンテン数計算用クラス)のインスタンスを生成
+#各インスタンスを生成
 shanten = Shanten()
+calculator = HandCalculator()
 
+
+def Shantensuu(tile):   
+
+    #計算
+    res = shanten.calculate_shanten(tile)
+    return res
+
+
+#結果出力用
+def print_hand_result(hand_result):
+     #翻数, 符数
+     print(hand_result.han, hand_result.fu)
+     #点数(ツモアガリの場合[左：親失点, 右:子失点], ロンアガリの場合[左:放銃者失点, 右:0])
+     print(hand_result.cost['main'], hand_result.cost['additional'])
+     #役
+     print(hand_result.yaku)
+     #符数の詳細
+     for fu_item in hand_result.fu_details:
+          print(fu_item)
+     print('')
+
+
+#main
+
+#-----------------手配管理------------------------#
+
+#-----------------手配管理------------------------#
+
+
+#手配の情報を整える
 #アガリ形(man=マンズ, pin=ピンズ, sou=ソーズ, honors=1:東, 2:南, 3:西, 4:北, 5:白, 6:發, 7:中)
-tiles = TilesConverter.string_to_34_array(man='677889', pin='88', sou='456', honors='222')
+#点数計算に使う
+tiles = TilesConverter.string_to_136_array(man='234555', pin='555', sou='22555')
 
-#計算
-result = shanten.calculate_shanten(tiles)
+#手配（聴牌チェックに使う）
+hand_tiles = TilesConverter.string_to_34_array(man='234555', pin='555', sou='22555')
 
-print(result)
+#------------------オプション設定------------------#
+
+#アガリ牌(上と同じ)
+win_tile = TilesConverter.string_to_136_array(sou='5')[0]
+
+#鳴き(なし)
+melds = None
+
+#ドラ(なし)
+dora_indicators = None
+
+#オプション(ツモを追加,Falseだとロン)
+config = HandConfig(is_tsumo=True)
+
+#------------------オプション設定------------------#
+
+
+#------------------上がれるか判定------------------#
+shan = Shantensuu(hand_tiles)
+print(shan)
+
+match shan:
+    case -1:
+        print("上がりです")
+        
+        #点数計算
+        result = calculator.estimate_hand_value(tiles, win_tile, melds, dora_indicators, config)
+        print_hand_result(result)
+
+
+
+    case 0:
+        print("聴牌です")
+#-----------------上がれるか判定------------------#
