@@ -32,8 +32,10 @@ def print_hand_result(hand_result):
      #役
      print(hand_result.yaku)
      #符数の詳細
-     for fu_item in hand_result.fu_details:
-          print(fu_item)
+
+     #国士無双13面待ちでエラー出ます；；
+    #  for fu_item in hand_result.fu_details:
+    #       print(fu_item)
      print('')
 
 
@@ -43,19 +45,28 @@ def print_hand_result(hand_result):
 
 #-----------------手配管理------------------------#
 
+hand_man = '19'
+hand_pin = '19'
+hand_sou = '19'
+hand_honors = '12345677'
+
+
+tumo = ''
+
 
 #手配の情報を整える
 #アガリ形(man=マンズ, pin=ピンズ, sou=ソーズ, honors=1:東, 2:南, 3:西, 4:北, 5:白, 6:發, 7:中)
 #点数計算に使う
-tiles = TilesConverter.string_to_136_array(man='234555', pin='555', sou='22555')
+tiles = TilesConverter.string_to_136_array(hand_man, hand_pin, hand_sou, hand_honors)
 
 #手配（聴牌チェックに使う）
-hand_tiles = TilesConverter.string_to_34_array(man='234555', pin='555', sou='22555')
+hand_tiles = TilesConverter.string_to_34_array(hand_man, hand_pin, hand_sou, hand_honors)
 
 #------------------オプション設定------------------#
 
 #アガリ牌(上と同じ)
-win_tile = TilesConverter.string_to_136_array(sou='5')[0]
+#ここだけ引数で指定する必要がある
+win_tile = TilesConverter.string_to_136_array(honors='7')[0]
 
 #鳴き(なし)
 melds = None
@@ -85,4 +96,5 @@ match shan:
 
     case 0:
         print("聴牌です")
+
 #-----------------上がれるか判定------------------#
