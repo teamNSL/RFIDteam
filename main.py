@@ -1,10 +1,6 @@
 #main
 
 
-
-Tilelist = []
-
-
 # 13行24列の二次元配列を初期化
 rows, cols = 13, 24
 matrix = [[0 for _ in range(cols)] for _ in range(rows)]
@@ -25,6 +21,8 @@ for num in range(0,rows,1):
 
 print("")
 
+
+#置き換え
 if "E280F3372000F00007F59EC3" in matrix:
     matrix[matrix.index("E280F3372000F00007F59EC3")]="9M"
 if "E280F3372000F00007F5885C" in matrix:
@@ -61,3 +59,4 @@ if "E280F3372000F00007F5A52D" in matrix:
 for num in range(0,rows,1):
     print(matrix[num])
 
+print("1")
