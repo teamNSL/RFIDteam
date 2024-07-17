@@ -21,4 +21,3 @@ tiles = TilesConverter.string_to_34_array(man='677889', pin='88', sou='456', hon
 result = shanten.calculate_shanten(tiles)
 
 print(result)
-print(1)
