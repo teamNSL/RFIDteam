@@ -38,7 +38,8 @@ hand_pin = ''
 hand_sou = ''
 hand_honors = ''
 
-# 手牌追加
+# --------手牌追加--------#
+# man
 if "E280F3372000F00007F563A8" in matrix:
     hand_man = hand_man + "1"
 if "E280F3372000F00007F59EC3" in matrix:
@@ -49,12 +50,13 @@ if "E280F3372000F00007F58EB2" in matrix:
 if "E280F3372000F00007F5885C" in matrix:
     hand_pin = hand_pin+"9"
 
-
+# sou
 if "E280F3372000F00007F55C05" in matrix:
     hand_sou = hand_sou + "1"
 if "E280F3372000F00007F5996F" in matrix:
     hand_sou = hand_sou+"9"
 
+# honors
 if "E280F3372000F00007F58098" in matrix:
     hand_honors = hand_honors + "1"
 if "E280F3372000F00007F572A3" in matrix:
@@ -63,7 +65,6 @@ if "E280F3372000F00007F594B3" in matrix:
     hand_honors = hand_honors+"3"
 if "E280F3372000F00007F59B40" in matrix:
     hand_honors = hand_honors+"4"
-
 
 if "E280F3372000F00007F5544F" in matrix:
     hand_honors = hand_honors+"5"
@@ -74,10 +75,11 @@ if "E280F3372000F00007F5A143" in matrix:
 
 # ------------格納完了------------#
 
-# ------------リーチ牌が何かわからない------------#
+
 matrix[13] = reach
 
 print("マンズ："+hand_man)
 print("ピンズ："+hand_pin)
 print("ソーズ："+hand_sou)
 print("honors："+hand_honors)
+print("最後の一枚："+reach)
