@@ -48,8 +48,17 @@ def print_hand_result(hand_result):
 Check = []  # 確認用リスト
 reach_stick = []
 
-
+while True:
+    check = input()
+    if check == "E280F3372000F00007F593BA":
+        print("リーチです！！")
+        break
+        
 # ------------リーチを検知------------#
+
+#----------リーチしたことを伝える------#
+
+#----------リーチしたことを伝える------#
 
 
 # 13行24列の二次元配列を初期化
@@ -83,8 +92,70 @@ print("最後の一枚引いたよ")
 #ツモが何かを識別
 #引いた牌の種類を識別するための変数
 type_reach = []
+
+#man
+if reach == "E280F3372000F00007F563A8":
+    type_reach = "man"
+    reach = "1"
+
+if reach == "E280F3372000F00007F59EC3":
+    type_reach = "man"
+    reach = "9"
+#pin
+if reach == "E280F3372000F00007F58EB2":
+    type_reach = "pin"
+    reach = "1"
+
+if reach == "E280F3372000F00007F59EC3":
+    type_reach = "pin"
+    reach = "9"
+
+#sou
+if reach == "E280F3372000F00007F55C05":
+    type_reach = "sou"
+    reach = "1"
+
+if reach == "E280F3372000F00007F5996F":
+    type_reach = "sou"
+    reach = "9"
+
+#東
+if reach == "E280F3372000F00007F58098":
+    type_reach = "honors"
+    reach = "1"
+
+#南
+if reach == "E280F3372000F00007F572A3":
+    type_reach = "honors"
+    reach = "2"
+
+#西
+if reach == "E280F3372000F00007F594B3":
+    type_reach = "honors"
+    reach = "3"
+
+#北
+if reach == "E280F3372000F00007F59B40":
+    type_reach = "honors"
+    reach = "4"
+
+#白1
+if reach == "E280F3372000F00007F58098":
+    type_reach = "honors"
+    reach = "5"
+
 #白2
 if reach == "999900000000000000000000":
+    type_reach = "honors"
+    reach = "5"
+
+#發E280F3372000F00007F58098
+if reach == "E280F3372000F00007F5A52D":
+    type_reach = "honors"
+    reach = "6"
+
+#中
+if reach == "E280F3372000F00007F5A143":
     type_reach = "honors"
     reach = "5"
 
@@ -103,6 +174,7 @@ if "E280F3372000F00007F563A8" in matrix:
 if "E280F3372000F00007F59EC3" in matrix:
     hand_man = hand_man + '9'
 
+#pin
 if "E280F3372000F00007F58EB2" in matrix:
     hand_pin = hand_pin + "1"
 if "E280F3372000F00007F5885C" in matrix:
@@ -131,7 +203,7 @@ if "E280F3372000F00007F59B40" in matrix:
 if "E280F3372000F00007F5544F" in matrix:
     hand_honors = hand_honors+"5"
 #白2
-if "E280F3372000F00007F5544F" in matrix:
+if "999900000000000000000000" in matrix:
     hand_honors = hand_honors+"5"
 #發
 if "E280F3372000F00007F5A52D" in matrix:
