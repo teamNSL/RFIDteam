@@ -1,6 +1,5 @@
 # main
 
-# --------------import--------------#
 # 計算
 from mahjong.hand_calculating.hand import HandCalculator
 # 麻雀牌
@@ -12,22 +11,19 @@ from mahjong.meld import Meld
 # 風(場&自)
 from mahjong.constants import EAST, SOUTH, WEST, NORTH  # シャンテン数
 from mahjong.shanten import Shanten
-# --------------import--------------#
 
-# ----------インスタンス生成---------#
+import socket
+
 shanten = Shanten()
 calculator = HandCalculator()
-# ----------インスタンス生成---------#
 
-# -------------点数計算--------------#
+#シャンテン数計算
 def Shantensuu(tile):
     # 計算
     res = shanten.calculate_shanten(tile)
     return res
-# -------------点数計算--------------#
 
-
-# -------------結果出力--------------#
+#結果出力
 def print_hand_result(hand_result):
     # 翻数, 符数
     print(hand_result.han, hand_result.fu)
@@ -41,9 +37,35 @@ def print_hand_result(hand_result):
     #  for fu_item in hand_result.fu_details:
     #       print(fu_item)
     print('')
-# -------------結果出力--------------#
+
 
 # ------------リーチを検知------------#
+
+#-------------スマホと通信------------#
+# ホスト名を取得、表示
+PORT = 5000
+host = socket.gethostname()
+print(host)
+
+# ipアドレスを取得、表示
+ip = socket.gethostbyname(host)
+print(ip) 
+
+#01. Socket Making : socket()
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+#02. Address & Port : bind()
+server.bind(("10.0.0.102", PORT))
+#03. Waiting the connection : listen()
+server.listen()
+#04. Getting the socket : accept()
+client, addr = server.accept()
+
+client.sendall(b"reach!\n") #messeage
+
+print("通信成功\n")
+
+#-------------スマホと通信------------#
+
 #読み込んだRFIDをリーチ棒か確認
 Check = []  # 確認用リスト
 reach_stick = []
@@ -57,7 +79,8 @@ while True:
 # ------------リーチを検知------------#
 
 #----------リーチしたことを伝える------#
-
+#05. Data Yaritori : send(), recv()
+client.sendall(b"reach!\n") #messeage
 #----------リーチしたことを伝える------#
 
 
@@ -97,6 +120,10 @@ type_reach = []
 if reach == "E280F3372000F00007F563A8":
     type_reach = "man"
     reach = "1"
+
+if reach == "997800000000000000000000":
+    type_reach = "man"
+    reach = "2"
 
 if reach == "E280F3372000F00007F59EC3":
     type_reach = "man"
@@ -268,9 +295,15 @@ match shan:
         result = calculator.estimate_hand_value(
             tiles, win_tile, melds, dora_indicators, config)
         print_hand_result(result)
+        
+        #当たりはいのメッセージを送信
+        client.sendall(b"Hit!\n") #messeage
 
     case 0:
         print("聴牌です")
+
+        #はずれの場合のメッセージ送信
+        client.sendall(b"Hit!\n") #messeage
 
 # -----------------上がれるか判定------------------#
 
@@ -284,3 +317,7 @@ print("ピンズ："+hand_pin)
 print("ソーズ："+hand_sou)
 print("honors："+hand_honors)
 print("最後の一枚："+reach)
+
+
+client.close()
+server.close()
