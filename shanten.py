@@ -45,20 +45,19 @@ def print_hand_result(hand_result):
 
 # -----------------手配管理------------------------#
 
-hand_man = '91'
-hand_pin = '19'
-hand_sou = '19'
-hand_honors = '12345677'
+hand_man = ''
+hand_pin = ''
+hand_sou = '123456789'
+hand_honors = '66111'
 
 
-tumo = ''
+tumo = '9'
 
 
 # 手配の情報を整える
 # アガリ形(man=マンズ, pin=ピンズ, sou=ソーズ, honors=1:東, 2:南, 3:西, 4:北, 5:白, 6:發, 7:中)
 # 点数計算に使う
-tiles = TilesConverter.string_to_136_array(
-    hand_man, hand_pin, hand_sou, hand_honors)
+tiles = TilesConverter.string_to_136_array(man=hand_man, pin=hand_pin, sou=hand_sou, honors=hand_honors)
 
 # 手配（聴牌チェックに使う）
 hand_tiles = TilesConverter.string_to_34_array(
@@ -68,7 +67,7 @@ hand_tiles = TilesConverter.string_to_34_array(
 
 # アガリ牌(上と同じ)
 # ここだけ引数で指定する必要がある
-win_tile = TilesConverter.string_to_136_array(honors='7')[0]
+win_tile = TilesConverter.string_to_136_array(sou=tumo)[0]
 
 # 鳴き(なし)
 melds = None
