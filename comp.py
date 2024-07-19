@@ -60,6 +60,8 @@ print(host)
 # #04. Getting the socket : accept()
 # client, addr = server.accept()
 
+# print("通信成功\n")
+
 #テスト用
 # client.sendall(b"reach!\n") #messeage
 
@@ -67,8 +69,6 @@ print(host)
 
 #-------------ゲームを開始------------#
 while True:
-
-    # print("通信成功\n")
 
     #-------------スマホと通信------------#
 
