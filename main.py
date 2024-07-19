@@ -12,7 +12,7 @@ matrix = [[0 for _ in range(cols)] for _ in range(rows)]
 
 # 重複なくタグを読み込む．
 Check = []  # 確認用リスト
-for num in range(0, rows, 1):
+for num in range(0, rows-1, 1):
     while True:
         check = input()
         flag = True
