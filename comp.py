@@ -55,398 +55,400 @@ host = socket.gethostname()
 ip = socket.gethostbyname(host)
 print(ip)
 
-#01. Socket Making : socket()
-server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-#02. Address & Port : bind()
-server.bind(("10.0.0.102", PORT))
-#03. Waiting the connection : listen()
-server.listen()
-#04. Getting the socket : accept()
-client, addr = server.accept()
-
-# print("通信成功\n")
-
-# テスト用
-# client.sendall(b"reach!\n") #messeage
-
-# -------------スマホと通信------------#
-
-# -------------ゲームを開始------------#
 while True:
+    #01. Socket Making : socket()
+    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    #02. Address & Port : bind()
+    server.bind(("10.0.0.102", PORT))
+    #03. Waiting the connection : listen()
+    server.listen()
+    #04. Getting the socket : accept()
+    client, addr = server.accept()
 
-    # 読み込んだRFIDをリーチ棒か確認
-    Check = []  # 確認用リスト
-    reach_stick = []
+    print("通信成功\n")
 
+    # テスト用
+    # client.sendall(b"reach!\n") #messeage
+
+    # -------------スマホと通信------------#
+
+    # -------------ゲームを開始------------#
     while True:
-        check = input()
-        if check == "E280F3372000F00007F593BA":
-            print("リーチです！！")
-            break
 
-    # ------------リーチを検知------------#
+        # 読み込んだRFIDをリーチ棒か確認
+        Check = []  # 確認用リスト
+        reach_stick = []
 
-    # ----------リーチしたことを伝える------#
-    # 05. Data Yaritori : send(), recv()
-    client.sendall(b"reach!\n") #messeage
-    # ----------リーチしたことを伝える------#
-
-    # 13行24列の二次元配列を初期化
-    rows, cols = 14, 24
-
-    matrix = [[0 for _ in range(cols)] for _ in range(rows)]
-
-    # 重複なくタグを読み込む．
-
-    for num in range(0, rows-1, 1):
         while True:
             check = input()
-            flag = True
-            for num2 in range(0, rows-1, 1):
-                if check == matrix[num2] or check == "E280F3372000F00007F593BA":
-                    flag = False
+            if check == "E280F3372000F00007F593BA":
+                print("リーチです！！")
+                break
+
+        # ------------リーチを検知------------#
+
+        # ----------リーチしたことを伝える------#
+        # 05. Data Yaritori : send(), recv()
+        client.sendall(b"reach!\n") #messeage
+        # ----------リーチしたことを伝える------#
+
+        # 13行24列の二次元配列を初期化
+        rows, cols = 14, 24
+
+        matrix = [[0 for _ in range(cols)] for _ in range(rows)]
+
+        # 重複なくタグを読み込む．
+
+        for num in range(0, rows-1, 1):
+            while True:
+                check = input()
+                flag = True
+                for num2 in range(0, rows-1, 1):
+                    if check == matrix[num2] or check == "E280F3372000F00007F593BA":
+                        flag = False
+                        break
+                if flag == True:
+                    matrix[num] = check
                     break
-            if flag == True:
-                matrix[num] = check
-                break
 
-    # 手牌を書くリストに格納
-    hand_man = ''
-    hand_pin = ''
-    hand_sou = ''
-    hand_honors = ''
+        # 手牌を書くリストに格納
+        hand_man = ''
+        hand_pin = ''
+        hand_sou = ''
+        hand_honors = ''
 
-    # --------手牌追加--------#
-
-    # man
-    if "E280F3372000F00007F563A8" in matrix:
-        hand_man = hand_man + "1"
-    if "997800000000000000000000" in matrix:
-        hand_man = hand_man + "2"
-    if "998800000000000000000000" in matrix:
-        hand_man = hand_man + "2"
-    if "E280F3372000F00007F47F46" in matrix:
-        hand_man = hand_man + "2"
-    if "E280F3372000F00007F59EC3" in matrix:
-        hand_man = hand_man + '9'
-
-    # pin
-    if "E280F3372000F00007F58EB2" in matrix:
-        hand_pin = hand_pin + "1"
-    if "E280F3372000F00007F540E2" in matrix:
-        hand_pin = hand_pin + "3"
-    if "999200000000000000000000" in matrix:
-        hand_pin = hand_pin + "4"
-    if "E280F3372000F00007F53853" in matrix:
-        hand_pin = hand_pin + "5"
-    if "E280F3372000F00007F5885C" in matrix:
-        hand_pin = hand_pin + "9"
-    # sou
-    if "E280F3372000F00007F55C05" in matrix:
-        hand_sou = hand_sou + "1"
-    if "998700000000000000000000" in matrix:
-        hand_sou = hand_sou+"1"
-    if "997900000000000000000000" in matrix:
-        hand_sou = hand_sou + "1"
-    if "E280F3372000F00007F5996F" in matrix:
-        hand_sou = hand_sou+"9"
-    if "998600000000000000000000" in matrix:
-        hand_sou = hand_sou+"6"
-    if "999600000000000000000000" in matrix:
-        hand_sou = hand_sou+"6"
-
-    # honors
-    # 東
-    if "E280F3372000F00007F58098" in matrix:
-        hand_honors = hand_honors + "1"
-    # 南
-    if "E280F3372000F00007F572A3" in matrix:
-        hand_honors = hand_honors + "2"
-    # 西
-    if "E280F3372000F00007F594B3" in matrix:
-        hand_honors = hand_honors+"3"
-    # 北
-    if "E280F3372000F00007F59B40" in matrix:
-        hand_honors = hand_honors+"4"
-    # 白1
-    if "E280F3372000F00007F5544F" in matrix:
-        hand_honors = hand_honors+"5"
-    # 白2
-    if "999900000000000000000000" in matrix:
-        hand_honors = hand_honors+"5"
-    # 白3
-    if "E280F3372000F00007F54C16" in matrix:
-        hand_honors = hand_honors + "5"
-
-    # 發
-    if "E280F3372000F00007F5A52D" in matrix:
-        hand_honors = hand_honors+"6"
-    # 中
-    if "E280F3372000F00007F5A143" in matrix:
-        hand_honors = hand_honors+"7"
-
-    # ------------格納完了------------#
-    print("リーチ目はすべて読んだよ")
-    print("マンズ："+hand_man)
-    print("ピンズ："+hand_pin)
-    print("ソーズ："+hand_sou)
-    print("honors："+hand_honors)
-
-    while True:
-        # ----------ツモ格納------------#
-        reach = []
-        while True:
-            reach = input()
-            if reach not in matrix:
-                matrix[rows-1] = reach
-                break
-        print("最後の一枚引いたよ")
-
-        # ツモが何かを識別
-        # 引いた牌の種類を識別するための変数
-        type_reach = []
+        # --------手牌追加--------#
 
         # man
-        if reach == "E280F3372000F00007F563A8":
-            type_reach = "man"
-            reach = "1"
+        if "E280F3372000F00007F563A8" in matrix:
             hand_man = hand_man + "1"
-
-        if reach == "997800000000000000000000":
-            type_reach = "man"
-            reach = "2"
+        if "997800000000000000000000" in matrix:
             hand_man = hand_man + "2"
-
-        if reach == "998800000000000000000000":
-            type_reach = "man"
-            reach = "2"
+        if "998800000000000000000000" in matrix:
             hand_man = hand_man + "2"
-
-        if reach == "E280F3372000F00007F47F46":
-            type_reach = "man"
-            reach = "2"
+        if "E280F3372000F00007F47F46" in matrix:
             hand_man = hand_man + "2"
-
-        if reach == "E280F3372000F00007F59EC3":
-            type_reach = "man"
-            reach = "9"
-            hand_man = hand_man + "9"
+        if "E280F3372000F00007F59EC3" in matrix:
+            hand_man = hand_man + '9'
 
         # pin
-        if reach == "E280F3372000F00007F58EB2":
-            type_reach = "pin"
-            reach = "1"
+        if "E280F3372000F00007F58EB2" in matrix:
             hand_pin = hand_pin + "1"
-
-        if reach == "E280F3372000F00007F540E2":
-            type_reach = "pin"
-            reach = "3"
+        if "E280F3372000F00007F540E2" in matrix:
             hand_pin = hand_pin + "3"
-
-        if reach == "999200000000000000000000":
-            type_reach = "pin"
-            reach = "4"
+        if "999200000000000000000000" in matrix:
             hand_pin = hand_pin + "4"
-
-        if reach == "E280F3372000F00007F53853":
-            type_reach = "pin"
-            reach = "5"
+        if "E280F3372000F00007F53853" in matrix:
             hand_pin = hand_pin + "5"
-
-        if reach == "E280F3372000F00007F5885C":
-            type_reach = "pin"
-            reach = "9"
+        if "E280F3372000F00007F5885C" in matrix:
             hand_pin = hand_pin + "9"
-
         # sou
-        if reach == "E280F3372000F00007F55C05":
-            type_reach = "sou"
-            reach = "1"
+        if "E280F3372000F00007F55C05" in matrix:
             hand_sou = hand_sou + "1"
-
-        if reach == "997900000000000000000000":
-            type_reach = "sou"
-            reach = "1"
+        if "998700000000000000000000" in matrix:
+            hand_sou = hand_sou+"1"
+        if "997900000000000000000000" in matrix:
             hand_sou = hand_sou + "1"
+        if "E280F3372000F00007F5996F" in matrix:
+            hand_sou = hand_sou+"9"
+        if "998600000000000000000000" in matrix:
+            hand_sou = hand_sou+"6"
+        if "999600000000000000000000" in matrix:
+            hand_sou = hand_sou+"6"
 
-        if reach == "998700000000000000000000":
-            type_reach = "sou"
-            reach = "1"
-            hand_sou = hand_sou + "1"
-
-        if reach == "999600000000000000000000":
-            type_reach = "sou"
-            reach = "6"
-            hand_sou = hand_sou + "6"
-
-        if reach == "998600000000000000000000":
-            type_reach = "sou"
-            reach = "6"
-            hand_sou = hand_sou + "6"
-
-        if reach == "E280F3372000F00007F5996F":
-            type_reach = "sou"
-            reach = "9"
-            hand_sou = hand_sou + "9"
-
+        # honors
         # 東
-        if reach == "E280F3372000F00007F58098":
-            type_reach = "honors"
-            reach = "1"
-            hand_honors = hand_honors+"1"
-
+        if "E280F3372000F00007F58098" in matrix:
+            hand_honors = hand_honors + "1"
         # 南
-        if reach == "E280F3372000F00007F572A3":
-            type_reach = "honors"
-            reach = "2"
-            hand_honors = hand_honors+"2"
-
+        if "E280F3372000F00007F572A3" in matrix:
+            hand_honors = hand_honors + "2"
         # 西
-        if reach == "E280F3372000F00007F594B3":
-            type_reach = "honors"
-            reach = "3"
+        if "E280F3372000F00007F594B3" in matrix:
             hand_honors = hand_honors+"3"
-
         # 北
-        if reach == "E280F3372000F00007F59B40":
-            type_reach = "honors"
-            reach = "4"
+        if "E280F3372000F00007F59B40" in matrix:
             hand_honors = hand_honors+"4"
-
         # 白1
-        if reach == "E280F3372000F00007F5544F":
-            type_reach = "honors"
-            reach = "5"
+        if "E280F3372000F00007F5544F" in matrix:
             hand_honors = hand_honors+"5"
-
         # 白2
-        if reach == "999900000000000000000000":
-            type_reach = "honors"
-            reach = "5"
+        if "999900000000000000000000" in matrix:
             hand_honors = hand_honors+"5"
-
         # 白3
-        if reach == "E280F3372000F00007F54C16":
-            type_reach = "honors"
-            reach = "5"
-            hand_honors = hand_honors+"5"
+        if "E280F3372000F00007F54C16" in matrix:
+            hand_honors = hand_honors + "5"
 
         # 發
-        if reach == "E280F3372000F00007F5A52D":
-            type_reach = "honors"
-            reach = "6"
+        if "E280F3372000F00007F5A52D" in matrix:
             hand_honors = hand_honors+"6"
-
         # 中
-        if reach == "E280F3372000F00007F5A143":
-            type_reach = "honors"
-            reach = "7"
+        if "E280F3372000F00007F5A143" in matrix:
             hand_honors = hand_honors+"7"
 
-        # ----------ツモ格納------------#
+        # ------------格納完了------------#
+        print("リーチ目はすべて読んだよ")
+        print("マンズ："+hand_man)
+        print("ピンズ："+hand_pin)
+        print("ソーズ："+hand_sou)
+        print("honors："+hand_honors)
 
-        # -----------上がり判定-----------
+        while True:
+            # ----------ツモ格納------------#
+            reach = []
+            while True:
+                reach = input()
+                if reach not in matrix:
+                    matrix[rows-1] = reach
+                    break
+            print("最後の一枚引いたよ")
 
-        # アガリ形(man=マンズ, pin=ピンズ, sou=ソーズ, honors=1:東, 2:南, 3:西, 4:北, 5:白, 6:發, 7:中)
-        # 点数計算に使う
-        tiles = TilesConverter.string_to_136_array(
-            man=hand_man, pin=hand_pin, sou=hand_sou, honors=hand_honors)
+            # ツモが何かを識別
+            # 引いた牌の種類を識別するための変数
+            type_reach = []
 
-        # 手配（聴牌チェックに使う）
-        hand_tiles = TilesConverter.string_to_34_array(
-            man=hand_man, pin=hand_pin, sou=hand_sou, honors=hand_honors)
+            # man
+            if reach == "E280F3372000F00007F563A8":
+                type_reach = "man"
+                reach = "1"
+                hand_man = hand_man + "1"
 
-        # ------------------オプション設定------------------#
+            if reach == "997800000000000000000000":
+                type_reach = "man"
+                reach = "2"
+                hand_man = hand_man + "2"
 
-        # アガリ牌(上と同じ)
-        # ここだけ引数で指定する必要がある
-        match type_reach:
+            if reach == "998800000000000000000000":
+                type_reach = "man"
+                reach = "2"
+                hand_man = hand_man + "2"
 
-            # ツモが萬豆の場合
-            case "man":
-                win_tile = TilesConverter.string_to_136_array(man=reach)[0]
-            # ツモが筒子の場合
-            case "pin":
-                win_tile = TilesConverter.string_to_136_array(pin=reach)[0]
-            # ツモが索子の場合
-            case "sou":
-                win_tile = TilesConverter.string_to_136_array(sou=reach)[0]
-            # ツモが字牌の場合
-            case "honors":
-                win_tile = TilesConverter.string_to_136_array(honors=reach)[0]
+            if reach == "E280F3372000F00007F47F46":
+                type_reach = "man"
+                reach = "2"
+                hand_man = hand_man + "2"
 
-        # 鳴き(なし)
-        melds = None
+            if reach == "E280F3372000F00007F59EC3":
+                type_reach = "man"
+                reach = "9"
+                hand_man = hand_man + "9"
 
-        # ドラ(なし)
-        dora_indicators = None
+            # pin
+            if reach == "E280F3372000F00007F58EB2":
+                type_reach = "pin"
+                reach = "1"
+                hand_pin = hand_pin + "1"
 
-        # オプション(ツモを追加,Falseだとロン)
-        config = HandConfig(is_tsumo=True)
+            if reach == "E280F3372000F00007F540E2":
+                type_reach = "pin"
+                reach = "3"
+                hand_pin = hand_pin + "3"
 
-        # ------------------オプション設定------------------#
+            if reach == "999200000000000000000000":
+                type_reach = "pin"
+                reach = "4"
+                hand_pin = hand_pin + "4"
 
-        shan = Shantensuu(hand_tiles)
-        print(shan)
+            if reach == "E280F3372000F00007F53853":
+                type_reach = "pin"
+                reach = "5"
+                hand_pin = hand_pin + "5"
 
-        # ------------------上がれるか判定------------------#
-        match shan:
-            case -1:
-                print("上がりです")
+            if reach == "E280F3372000F00007F5885C":
+                type_reach = "pin"
+                reach = "9"
+                hand_pin = hand_pin + "9"
 
-                # 点数計算
-                result = calculator.estimate_hand_value(
-                    tiles, win_tile, melds, dora_indicators, config)
-                print_hand_result(result)
+            # sou
+            if reach == "E280F3372000F00007F55C05":
+                type_reach = "sou"
+                reach = "1"
+                hand_sou = hand_sou + "1"
 
-                # 当たりはいのメッセージを送信
-                client.sendall(b"Hit!\n") #messeage
+            if reach == "997900000000000000000000":
+                type_reach = "sou"
+                reach = "1"
+                hand_sou = hand_sou + "1"
 
-                print("マンズ："+hand_man)
-                print("ピンズ："+hand_pin)
-                print("ソーズ："+hand_sou)
-                print("honors："+hand_honors)
-                print("最後の一枚："+reach)
+            if reach == "998700000000000000000000":
+                type_reach = "sou"
+                reach = "1"
+                hand_sou = hand_sou + "1"
 
-                break
+            if reach == "999600000000000000000000":
+                type_reach = "sou"
+                reach = "6"
+                hand_sou = hand_sou + "6"
 
-            case 0:
-                print("聴牌です")
+            if reach == "998600000000000000000000":
+                type_reach = "sou"
+                reach = "6"
+                hand_sou = hand_sou + "6"
 
-                print("マンズ："+hand_man)
-                print("ピンズ："+hand_pin)
-                print("ソーズ："+hand_sou)
-                print("honors："+hand_honors)
-                print("最後の一枚："+reach)
+            if reach == "E280F3372000F00007F5996F":
+                type_reach = "sou"
+                reach = "9"
+                hand_sou = hand_sou + "9"
 
-                match type_reach:
-                    case "man":
-                        hand_man = hand_man[:-1]
-                    case "pin":
-                        hand_pin = hand_pin[:-1]
-                    case "sou":
-                        hand_sou = hand_sou[:-1]
-                    case "honors":
-                        hand_honors = hand_honors[:-1]
+            # 東
+            if reach == "E280F3372000F00007F58098":
+                type_reach = "honors"
+                reach = "1"
+                hand_honors = hand_honors+"1"
 
-                print("マンズ："+hand_man)
-                print("ピンズ："+hand_pin)
-                print("ソーズ："+hand_sou)
-                print("honors："+hand_honors)
-                print("最後の一枚："+reach)
+            # 南
+            if reach == "E280F3372000F00007F572A3":
+                type_reach = "honors"
+                reach = "2"
+                hand_honors = hand_honors+"2"
 
-                # はずれの場合のメッセージ送信
-                # client.sendall(b"Lose!\n") #messeage
+            # 西
+            if reach == "E280F3372000F00007F594B3":
+                type_reach = "honors"
+                reach = "3"
+                hand_honors = hand_honors+"3"
 
-        # -----------------上がれるか判定------------------#
+            # 北
+            if reach == "E280F3372000F00007F59B40":
+                type_reach = "honors"
+                reach = "4"
+                hand_honors = hand_honors+"4"
 
-        # -----------上がり判定-----------#
+            # 白1
+            if reach == "E280F3372000F00007F5544F":
+                type_reach = "honors"
+                reach = "5"
+                hand_honors = hand_honors+"5"
 
-    # ----------継続メッセージを受信-------#
-    mess = "1"
-    if mess == 0:
-        break
-    # ----------継続メッセージを受信-------#
+            # 白2
+            if reach == "999900000000000000000000":
+                type_reach = "honors"
+                reach = "5"
+                hand_honors = hand_honors+"5"
 
-client.close()
-server.close()
+            # 白3
+            if reach == "E280F3372000F00007F54C16":
+                type_reach = "honors"
+                reach = "5"
+                hand_honors = hand_honors+"5"
+
+            # 發
+            if reach == "E280F3372000F00007F5A52D":
+                type_reach = "honors"
+                reach = "6"
+                hand_honors = hand_honors+"6"
+
+            # 中
+            if reach == "E280F3372000F00007F5A143":
+                type_reach = "honors"
+                reach = "7"
+                hand_honors = hand_honors+"7"
+
+            # ----------ツモ格納------------#
+
+            # -----------上がり判定-----------
+
+            # アガリ形(man=マンズ, pin=ピンズ, sou=ソーズ, honors=1:東, 2:南, 3:西, 4:北, 5:白, 6:發, 7:中)
+            # 点数計算に使う
+            tiles = TilesConverter.string_to_136_array(
+                man=hand_man, pin=hand_pin, sou=hand_sou, honors=hand_honors)
+
+            # 手配（聴牌チェックに使う）
+            hand_tiles = TilesConverter.string_to_34_array(
+                man=hand_man, pin=hand_pin, sou=hand_sou, honors=hand_honors)
+
+            # ------------------オプション設定------------------#
+
+            # アガリ牌(上と同じ)
+            # ここだけ引数で指定する必要がある
+            match type_reach:
+
+                # ツモが萬豆の場合
+                case "man":
+                    win_tile = TilesConverter.string_to_136_array(man=reach)[0]
+                # ツモが筒子の場合
+                case "pin":
+                    win_tile = TilesConverter.string_to_136_array(pin=reach)[0]
+                # ツモが索子の場合
+                case "sou":
+                    win_tile = TilesConverter.string_to_136_array(sou=reach)[0]
+                # ツモが字牌の場合
+                case "honors":
+                    win_tile = TilesConverter.string_to_136_array(honors=reach)[0]
+
+            # 鳴き(なし)
+            melds = None
+
+            # ドラ(なし)
+            dora_indicators = None
+
+            # オプション(ツモを追加,Falseだとロン)
+            config = HandConfig(is_tsumo=True)
+
+            # ------------------オプション設定------------------#
+
+            shan = Shantensuu(hand_tiles)
+            print(shan)
+
+            # ------------------上がれるか判定------------------#
+            match shan:
+                case -1:
+                    print("上がりです")
+
+                    # 点数計算
+                    result = calculator.estimate_hand_value(
+                        tiles, win_tile, melds, dora_indicators, config)
+                    print_hand_result(result)
+
+                    # 当たりはいのメッセージを送信
+                    client.sendall(b"Hit!\n") #messeage
+
+                    print("マンズ："+hand_man)
+                    print("ピンズ："+hand_pin)
+                    print("ソーズ："+hand_sou)
+                    print("honors："+hand_honors)
+                    print("最後の一枚："+reach)
+
+                    break
+
+                case 0:
+                    print("聴牌です")
+
+                    print("マンズ："+hand_man)
+                    print("ピンズ："+hand_pin)
+                    print("ソーズ："+hand_sou)
+                    print("honors："+hand_honors)
+                    print("最後の一枚："+reach)
+
+                    match type_reach:
+                        case "man":
+                            hand_man = hand_man[:-1]
+                        case "pin":
+                            hand_pin = hand_pin[:-1]
+                        case "sou":
+                            hand_sou = hand_sou[:-1]
+                        case "honors":
+                            hand_honors = hand_honors[:-1]
+
+                    print("マンズ："+hand_man)
+                    print("ピンズ："+hand_pin)
+                    print("ソーズ："+hand_sou)
+                    print("honors："+hand_honors)
+                    print("最後の一枚："+reach)
+
+                    # はずれの場合のメッセージ送信
+                    client.sendall(b"Lose!\n") #messeage
+
+            # -----------------上がれるか判定------------------#
+
+            # -----------上がり判定-----------#
+
+        # ----------継続メッセージを受信-------#
+        mess = "1"
+        if mess == "1":
+            break
+        # ----------継続メッセージを受信-------#
+
+    client.close()
+    server.close()
+
