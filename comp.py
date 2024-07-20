@@ -53,7 +53,7 @@ host = socket.gethostname()
 
 # # ipアドレスを取得、表示
 ip = socket.gethostbyname(host)
-#print(ip)
+print(ip)
 
 #01. Socket Making : socket()
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
