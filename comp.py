@@ -52,17 +52,17 @@ PORT = 5000
 host = socket.gethostname()
 
 # # ipアドレスを取得、表示
-# ip = socket.gethostbyname(host)
-# print(ip)
+ip = socket.gethostbyname(host)
+#print(ip)
 
-# #01. Socket Making : socket()
-# server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-# #02. Address & Port : bind()
-# server.bind(("10.0.0.102", PORT))
-# #03. Waiting the connection : listen()
-# server.listen()
-# #04. Getting the socket : accept()
-# client, addr = server.accept()
+#01. Socket Making : socket()
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+#02. Address & Port : bind()
+server.bind(("10.0.0.102", PORT))
+#03. Waiting the connection : listen()
+server.listen()
+#04. Getting the socket : accept()
+client, addr = server.accept()
 
 # print("通信成功\n")
 
@@ -88,7 +88,7 @@ while True:
 
     # ----------リーチしたことを伝える------#
     # 05. Data Yaritori : send(), recv()
-    # client.sendall(b"reach!\n") #messeage
+    client.sendall(b"reach!\n") #messeage
     # ----------リーチしたことを伝える------#
 
     # 13行24列の二次元配列を初期化
@@ -400,7 +400,7 @@ while True:
                 print_hand_result(result)
 
                 # 当たりはいのメッセージを送信
-                # client.sendall(b"Hit!\n") #messeage
+                client.sendall(b"Hit!\n") #messeage
 
                 print("マンズ："+hand_man)
                 print("ピンズ："+hand_pin)
@@ -448,6 +448,5 @@ while True:
         break
     # ----------継続メッセージを受信-------#
 
-
-# client.close()
-# server.close()
+client.close()
+server.close()
