@@ -1,5 +1,6 @@
 # main
 
+
 # 計算
 from mahjong.hand_calculating.hand import HandCalculator
 # 麻雀牌
@@ -49,7 +50,6 @@ def print_hand_result(hand_result):
 # ホスト名を取得、表示
 PORT = 5000
 host = socket.gethostname()
-print(host)
 
 # # ipアドレスを取得、表示
 # ip = socket.gethostbyname(host)
@@ -102,14 +102,13 @@ while True:
         while True:
             check = input()
             flag = True
-            for num2 in range(0, rows, 1):
-                if check == matrix[num2]:
+            for num2 in range(0, rows-1, 1):
+                if check == matrix[num2] or check == "E280F3372000F00007F593BA":
                     flag = False
+                    break
             if flag == True:
                 matrix[num] = check
                 break
-
-    print("リーチ目はすべて読んだよ")
 
     # 手牌を書くリストに格納
     hand_man = ''
@@ -138,13 +137,10 @@ while True:
         hand_pin = hand_pin + "3"
     if "999200000000000000000000" in matrix:
         hand_pin = hand_pin + "4"
-    if "998700000000000000000000" in matrix:
+    if "E280F3372000F00007F53853" in matrix:
         hand_pin = hand_pin + "5"
     if "E280F3372000F00007F5885C" in matrix:
-        hand_pin = hand_pin + "6"
-    if "E280F3372000F00007F5885C" in matrix:
         hand_pin = hand_pin + "9"
-
     # sou
     if "E280F3372000F00007F55C05" in matrix:
         hand_sou = hand_sou + "1"
@@ -190,6 +186,11 @@ while True:
         hand_honors = hand_honors+"7"
 
     # ------------格納完了------------#
+    print("リーチ目はすべて読んだよ")
+    print("マンズ："+hand_man)
+    print("ピンズ："+hand_pin)
+    print("ソーズ："+hand_sou)
+    print("honors："+hand_honors)
 
     while True:
         # ----------ツモ格納------------#
@@ -216,6 +217,16 @@ while True:
             reach = "2"
             hand_man = hand_man + "2"
 
+        if reach == "998800000000000000000000":
+            type_reach = "man"
+            reach = "2"
+            hand_man = hand_man + "2"
+
+        if reach == "E280F3372000F00007F47F46":
+            type_reach = "man"
+            reach = "2"
+            hand_man = hand_man + "2"
+
         if reach == "E280F3372000F00007F59EC3":
             type_reach = "man"
             reach = "9"
@@ -227,7 +238,22 @@ while True:
             reach = "1"
             hand_pin = hand_pin + "1"
 
-        if reach == "E280F3372000F00007F59EC3":
+        if reach == "E280F3372000F00007F540E2":
+            type_reach = "pin"
+            reach = "3"
+            hand_pin = hand_pin + "3"
+
+        if reach == "999200000000000000000000":
+            type_reach = "pin"
+            reach = "4"
+            hand_pin = hand_pin + "4"
+
+        if reach == "E280F3372000F00007F53853":
+            type_reach = "pin"
+            reach = "5"
+            hand_pin = hand_pin + "5"
+
+        if reach == "E280F3372000F00007F5885C":
             type_reach = "pin"
             reach = "9"
             hand_pin = hand_pin + "9"
@@ -237,6 +263,26 @@ while True:
             type_reach = "sou"
             reach = "1"
             hand_sou = hand_sou + "1"
+
+        if reach == "997900000000000000000000":
+            type_reach = "sou"
+            reach = "1"
+            hand_sou = hand_sou + "1"
+
+        if reach == "998700000000000000000000":
+            type_reach = "sou"
+            reach = "1"
+            hand_sou = hand_sou + "1"
+
+        if reach == "999600000000000000000000":
+            type_reach = "sou"
+            reach = "6"
+            hand_sou = hand_sou + "6"
+
+        if reach == "998600000000000000000000":
+            type_reach = "sou"
+            reach = "6"
+            hand_sou = hand_sou + "6"
 
         if reach == "E280F3372000F00007F5996F":
             type_reach = "sou"
@@ -268,7 +314,7 @@ while True:
             hand_honors = hand_honors+"4"
 
         # 白1
-        if reach == "E280F3372000F00007F58098":
+        if reach == "E280F3372000F00007F5544F":
             type_reach = "honors"
             reach = "5"
             hand_honors = hand_honors+"5"
@@ -279,7 +325,13 @@ while True:
             reach = "5"
             hand_honors = hand_honors+"5"
 
-        # 發E280F3372000F00007F58098
+        # 白3
+        if reach == "E280F3372000F00007F54C16":
+            type_reach = "honors"
+            reach = "5"
+            hand_honors = hand_honors+"5"
+
+        # 發
         if reach == "E280F3372000F00007F5A52D":
             type_reach = "honors"
             reach = "6"
