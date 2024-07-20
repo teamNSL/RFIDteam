@@ -118,50 +118,76 @@ while True:
     hand_honors = ''
 
     # --------手牌追加--------#
-    for x in rows:
-        # man
-        if "E280F3372000F00007F563A8" in matrix:
-            hand_man = hand_man + "1"
-        if "E280F3372000F00007F59EC3" in matrix:
-            hand_man = hand_man + '9'
 
-        # pin
-        if "E280F3372000F00007F58EB2" in matrix:
-            hand_pin = hand_pin + "1"
-        if "E280F3372000F00007F5885C" in matrix:
-            hand_pin = hand_pin+"9"
+    # man
+    if "E280F3372000F00007F563A8" in matrix:
+        hand_man = hand_man + "1"
+    if "997800000000000000000000" in matrix:
+        hand_man = hand_man + "2"
+    if "998800000000000000000000" in matrix:
+        hand_man = hand_man + "2"
+    if "E280F3372000F00007F47F46" in matrix:
+        hand_man = hand_man + "2"
+    if "E280F3372000F00007F59EC3" in matrix:
+        hand_man = hand_man + '9'
 
-        # sou
-        if "E280F3372000F00007F55C05" in matrix:
-            hand_sou = hand_sou + "1"
-        if "E280F3372000F00007F5996F" in matrix:
-            hand_sou = hand_sou+"9"
+    # pin
+    if "E280F3372000F00007F58EB2" in matrix:
+        hand_pin = hand_pin + "1"
+    if "E280F3372000F00007F540E2" in matrix:
+        hand_pin = hand_pin + "3"
+    if "999200000000000000000000" in matrix:
+        hand_pin = hand_pin + "4"
+    if "998700000000000000000000" in matrix:
+        hand_pin = hand_pin + "5"
+    if "E280F3372000F00007F5885C" in matrix:
+        hand_pin = hand_pin + "6"
+    if "E280F3372000F00007F5885C" in matrix:
+        hand_pin = hand_pin + "9"
 
-        # honors
-        # 東
-        if "E280F3372000F00007F58098" in matrix:
-            hand_honors = hand_honors + "1"
-        # 南
-        if "E280F3372000F00007F572A3" in matrix:
-            hand_honors = hand_honors + "2"
-        # 西
-        if "E280F3372000F00007F594B3" in matrix:
-            hand_honors = hand_honors+"3"
-        # 北
-        if "E280F3372000F00007F59B40" in matrix:
-            hand_honors = hand_honors+"4"
-        # 白1
-        if "E280F3372000F00007F5544F" in matrix:
-            hand_honors = hand_honors+"5"
-        # 白2
-        if "999900000000000000000000" in matrix:
-            hand_honors = hand_honors+"5"
-        # 發
-        if "E280F3372000F00007F5A52D" in matrix:
-            hand_honors = hand_honors+"6"
-        # 中
-        if "E280F3372000F00007F5A143" in matrix:
-            hand_honors = hand_honors+"7"
+    # sou
+    if "E280F3372000F00007F55C05" in matrix:
+        hand_sou = hand_sou + "1"
+    if "998700000000000000000000" in matrix:
+        hand_sou = hand_sou+"1"
+    if "997900000000000000000000" in matrix:
+        hand_sou = hand_sou + "1"
+    if "E280F3372000F00007F5996F" in matrix:
+        hand_sou = hand_sou+"9"
+    if "998600000000000000000000" in matrix:
+        hand_sou = hand_sou+"6"
+    if "999600000000000000000000" in matrix:
+        hand_sou = hand_sou+"6"
+
+    # honors
+    # 東
+    if "E280F3372000F00007F58098" in matrix:
+        hand_honors = hand_honors + "1"
+    # 南
+    if "E280F3372000F00007F572A3" in matrix:
+        hand_honors = hand_honors + "2"
+    # 西
+    if "E280F3372000F00007F594B3" in matrix:
+        hand_honors = hand_honors+"3"
+    # 北
+    if "E280F3372000F00007F59B40" in matrix:
+        hand_honors = hand_honors+"4"
+    # 白1
+    if "E280F3372000F00007F5544F" in matrix:
+        hand_honors = hand_honors+"5"
+    # 白2
+    if "999900000000000000000000" in matrix:
+        hand_honors = hand_honors+"5"
+    # 白3
+    if "E280F3372000F00007F54C16" in matrix:
+        hand_honors = hand_honors + "5"
+
+    # 發
+    if "E280F3372000F00007F5A52D" in matrix:
+        hand_honors = hand_honors+"6"
+    # 中
+    if "E280F3372000F00007F5A143" in matrix:
+        hand_honors = hand_honors+"7"
 
     # ------------格納完了------------#
 
